@@ -1,3 +1,16 @@
-<p>Mis Contactos</p>
+<h1>Mis contactos</h1>
 
-<p>{{nombre}} {{apellido}} {{telefono}}</p>
+@for (contacto of contactos; track $index) {
+<div>
+    <span>
+        <img src="" alt="Foto del contacto">
+    </span>
+    <span>
+        Nombre:{{contacto.nombre}}
+    </span>
+    <span>
+        Telefono:{{contacto.telefono}}
+    </span>
+</div>
+}
+<button (click)="agregarAlumno()" [disabled]="contactos.length > 5">Agregar contacto</button>

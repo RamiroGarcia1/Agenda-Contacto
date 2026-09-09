@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 
+interface Contacto {
+  nombre: string;
+  telefono: string;
+}
+
 @Component({
   imports: [],
   selector: 'app-contacts',
@@ -8,14 +13,25 @@ import { Component } from '@angular/core';
 })
 export class Contacts {
 
-  nombre = "R"
-  apellido = "G"
-  telefono = "1"
+  nombre = ""
+  apellido = ""
+  presente = false;
 
-  alumnos = ["Horacio", "Pedro", "Simon"];
+  contactos: Contacto[] = [
+    { nombre: "Horacio", telefono: "12345" },
+    { nombre: "Pedro", telefono: "54321" },
+    { nombre: "Simon", telefono: "246810" },
+    { nombre: "Ramiro", telefono: "975310" },
+  ]
 
-  agregarAlumnos(){
-    
+  agregarAlumno() {
+    if (this.contactos.length < 6) {
+      this.contactos.push({
+        nombre: 'Alumno nuevo' + (this.contactos.length + 1),
+        telefono: 'sin telefono'
+      })
+      console.log(this.contactos)
+    }
   }
 
 }
