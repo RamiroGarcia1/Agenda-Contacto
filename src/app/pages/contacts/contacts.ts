@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouterLink } from "@angular/router";
 
 interface Contacto {
   nombre: string;
@@ -6,7 +7,7 @@ interface Contacto {
 }
 
 @Component({
-  imports: [],
+  imports: [RouterLink],
   selector: 'app-contacts',
   styleUrl: './contacts.scss',
   templateUrl: './contacts.html',
