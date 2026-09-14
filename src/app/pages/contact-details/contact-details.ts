@@ -1,13 +1,20 @@
-import { Component, input } from '@angular/core';
-import { RouterLink } from '@angular/router';
-
+import { Component, inject, input, OnInit } from '@angular/core';
+import { ContactsService } from '../../services/contacts';
+import { Contact } from '../../interfaces/contacts';
 @Component({
-  imports: [RouterLink],
+  imports: [],
   selector: 'app-contact-details',
   styleUrl: './contact-details.scss',
   templateUrl: './contact-details.html',
 })
-export class ContactDetails {
+export class ContactDetails implements OnInit {
 
-  id = input();
+  id = input.required<string>();
+  contacto: Contact | undefined;
+  contactsService = inject(ContactsService);
+
+  ngOnInit(): void {
+    this.contacto = this.contactsService.getContactById(this.id())
+  }
+
 }

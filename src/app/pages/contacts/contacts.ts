@@ -1,10 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
-
-interface Contacto {
-  nombre: string;
-  telefono: string;
-}
+import { ContactsService } from '../../services/contacts';
 
 @Component({
   imports: [RouterLink],
@@ -13,26 +9,5 @@ interface Contacto {
   templateUrl: './contacts.html',
 })
 export class Contacts {
-
-  nombre = ""
-  apellido = ""
-  presente = false;
-
-  contactos: Contacto[] = [
-    { nombre: "Horacio", telefono: "12345" },
-    { nombre: "Pedro", telefono: "54321" },
-    { nombre: "Simon", telefono: "246810" },
-    { nombre: "Ramiro", telefono: "975310" },
-  ]
-
-  agregarAlumno() {
-    if (this.contactos.length < 6) {
-      this.contactos.push({
-        nombre: 'Alumno nuevo' + (this.contactos.length + 1),
-        telefono: 'sin telefono'
-      })
-      console.log(this.contactos)
-    }
-  }
-
+  contacts = inject(ContactsService);
 }
