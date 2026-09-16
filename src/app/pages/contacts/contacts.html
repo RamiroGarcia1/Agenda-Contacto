@@ -1,5 +1,51 @@
 <h1>Mis contactos</h1>
 
+<div class="contactos-lista">
+    @for (contacto of contacts.contactList; track contacto.id) {
+    <div>
+        <a class="contacto-item" [routerLink]="['/contacts', contacto.id]">
+            <span class="avatar">
+                <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                    <path
+                        d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                </svg>
+            </span>
+            <span class="info">
+                <span class="nombre">{{ contacto.nombre }}</span>
+                <span class="telefono">{{ contacto.telefono }}</span>
+            </span>
+        </a>
+    </div>
+    }
+</div>
+
+<button class="boton-agregar" (click)="contacts.agregarContacto()" [disabled]="contacts.contactList.length > 5">
+    Agregar contacto
+</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <h1>Mis contactos</h1>
+
 @for (contacto of contacts.contactList; track contacto.id) {
 <div>
     <a [routerLink]="['/contacts', contacto.id]">
@@ -13,4 +59,4 @@
 </div>
 }
 
-<button (click)="contacts.agregarContacto()" [disabled]="contacts.contactList.length > 5">Agregar contacto</button>
+<button (click)="contacts.agregarContacto()" [disabled]="contacts.contactList.length > 5">Agregar contacto</button> -->
