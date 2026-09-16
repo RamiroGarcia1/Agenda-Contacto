@@ -1,9 +1,9 @@
-import { Service } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Contact } from '../interfaces/contacts';
 
-@Service()
+@Injectable({ providedIn: 'root' })
 export class ContactsService {
-     contactList: Contact[] = [
+  contactList: Contact[] = [
     {
       id: "1",
       nombre: "Ramiro",
@@ -29,19 +29,26 @@ export class ContactsService {
       direccion: "Av Siempre Viva 123"
     },
   ]
- 
- agregarContacto(){
+
+  agregarContacto(nuevoContacto: Contact): string {
+    const nuevoId = (this.contactList.length + 1).toString();
     this.contactList.push({
-      id: '2',
-      nombre: '44567',
-      apellido: '4567',
-      telefono: '4567'
-    })
-    console.log(this.contactList)
+      nombre: nuevoContacto.nombre,
+      apellido: nuevoContacto.apellido,
+      telefono: nuevoContacto.telefono,
+      direccion: nuevoContacto.direccion,
+      email: nuevoContacto.email,
+      id: nuevoId
+    });
+    return nuevoId;
   }
 
-getContactById(id:string){
-  const contactoEncontrado = this.contactList.find(contact => contact.id === id);
-  return contactoEncontrado;
-}
+  getContactById(id: string) {
+    const contactoEncontrado = this.contactList.find(contact => contact.id === id);
+    return contactoEncontrado;
+  }
+
+  deleteContact(id: string) {
+    this.contactList = this.contactList.filter(contact => contact.id !== id);
+  }
 }
