@@ -1,5 +1,5 @@
 <div class="detalle-page">
-    <a class="volver" routerLink="/contacts">&larr; Volver</a>
+    <a class="volver" routerLink="/contacts">Volver</a>
 
     <div class="detalle-card">
         <div class="avatar-grande">
@@ -8,16 +8,19 @@
                     d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
             </svg>
         </div>
-        <h1>Nombre y Apellido</h1>
+        <h1>{{ contacto?.nombre }} {{ contacto?.apellido }}</h1>
         <p class="id-actual">ID actual: {{ id() }}</p>
 
         <div class="detalle-row">
             <span class="etiqueta">Teléfono</span>
-            <span class="valor">Telefono</span>
+            <span class="valor">{{ contacto?.telefono }}</span>
         </div>
         <div class="detalle-row">
             <span class="etiqueta">Dirección</span>
-            <span class="valor">Direccion</span>
+            <span class="valor">{{ contacto?.direccion }}</span>
+        </div>
+        <div>
+            <button class="btn-eliminar-detalle" (click)="eliminarContacto(id())">Eliminar contacto</button>
         </div>
     </div>
 </div>

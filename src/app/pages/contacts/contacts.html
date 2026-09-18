@@ -19,10 +19,8 @@
                     <span class="telefono">{{ contacto.telefono }}</span>
                 </span>
             </a>
-            <div class="acciones">
-                <button [routerLink]="['/contacts/edit', contacto.id]">Editar</button>
-                <button (click)="eliminarContacto(contacto.id)">Eliminar</button>
-            </div>
+            <a class="btn-editar" [routerLink]="['/contacts', contacto.id, 'edit']">Editar</a>
+            <button class="btn-eliminar" (click)="eliminarContacto(contacto.id)">Eliminar</button>
         </div>
         }
     </div>

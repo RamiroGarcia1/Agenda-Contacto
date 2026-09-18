@@ -67,3 +67,20 @@ h1 {
         font-weight: 500;
     }
 }
+
+.btn-eliminar-detalle {
+    margin-top: 20px;
+    width: 100%;
+    padding: 10px;
+    background-color: #fdeceb;
+    color: #c0392b;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    cursor: pointer;
+
+    &:hover {
+        background-color: #f8d7d3;
+    }
+}

@@ -22,4 +22,4 @@ export class Contacts {
       timer: 1500
     });
   }
-}
+  }

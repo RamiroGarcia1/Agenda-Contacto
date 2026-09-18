@@ -30,16 +30,14 @@ export class ContactsService {
     },
   ]
 
-  agregarContacto(nuevoContacto: Contact): string {
+  agregarContacto(nuevoContacto: Contact) {
     const nuevoId = (this.contactList.length + 1).toString();
     this.contactList.push({
+      id: nuevoId,
       nombre: nuevoContacto.nombre,
       apellido: nuevoContacto.apellido,
-      telefono: nuevoContacto.telefono,
-      direccion: nuevoContacto.direccion,
-      email: nuevoContacto.email,
-      id: nuevoId
-    });
+      telefono: nuevoContacto.telefono
+    })
     return nuevoId;
   }
 
@@ -49,6 +47,13 @@ export class ContactsService {
   }
 
   deleteContact(id: string) {
-    this.contactList = this.contactList.filter(contact => contact.id !== id);
+    this.contactList = this.contactList.filter(c => c.id !== id);
+  }
+
+  editContact(contact: Contact) {
+    this.contactList = this.contactList.map(c => {
+      if (c.id === contact.id) return contact;
+      return c
+    });
   }
 }
