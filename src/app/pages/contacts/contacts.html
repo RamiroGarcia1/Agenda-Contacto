@@ -5,9 +5,9 @@
 
 <main>
     <div class="contactos-lista">
-        @for (contacto of contacts.contactList; track contacto.id) {
+        @for (contacto of contacts.contactList; track contacto.Id) {
         <div class="contacto card">
-            <a class="contacto-item" [routerLink]="['/contacts', contacto.id]">
+            <a class="contacto-item" [routerLink]="['/contacts', contacto.Id]">
                 <span class="avatar">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                         <path
@@ -15,12 +15,12 @@
                     </svg>
                 </span>
                 <span class="info">
-                    <span class="nombre">{{ contacto.nombre }} {{ contacto.apellido }}</span>
-                    <span class="telefono">{{ contacto.telefono }}</span>
+                    <span class="nombre">{{ contacto.FirstName }} {{ contacto.LastName }}</span>
+                    <span class="telefono">{{ contacto.Number }}</span>
                 </span>
             </a>
-            <a class="btn-editar" [routerLink]="['/contacts', contacto.id, 'edit']">Editar</a>
-            <button class="btn-eliminar" (click)="eliminarContacto(contacto.id)">Eliminar</button>
+            <a class="btn-editar" [routerLink]="['/contacts', contacto.Id, 'edit']">Editar</a>
+            <button class="btn-eliminar" (click)="eliminarContacto(contacto.Id)">Eliminar</button>
         </div>
         }
     </div>
