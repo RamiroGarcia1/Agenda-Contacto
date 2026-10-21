@@ -1,1 +1,25 @@
-<p>register works!</p>
+<section>
+   <div class="card chico">  
+       <h1>Agenda Contactos</h1>
+       <h3>Registrarse</h3>
+       <form (submit)="register($event)">
+           <div>
+            <label for="">Primer Nombre</label>
+               <input type="text" id="" [formField]="formRegister.firstName">
+               <label for="">Apellido</label>
+               <input type="text" id="" [formField]="formRegister.lastName">
+               <label for="">Email</label>
+               <input type="email" id="" [formField]="formRegister.email">
+               <label for="">Password</label>
+               <input type="password" id="" [formField]="formRegister.password">
+            <label for="">Repetir password</label>
+            <input type="password" id="" [formField]="formRegister.password2">
+            @if(formRegister.password2().invalid()){
+                <p>Las contraseñas no coinciden</p>
+            }
+            </div>
+            <button [disabled]="formRegister().invalid()">Registrese</button>
+        <p>Tenés cuenta? <a routerLink="/login">Inicia sesión</a></p>
+        </form>
+    </div>
+</section>

@@ -1,26 +1,27 @@
-<div class="detalle-page">
-    <a class="volver" routerLink="/contacts">Volver</a>
-
-    <div class="detalle-card">
-        <div class="avatar-grande">
-            <svg viewBox="0 0 24 24" width="40" height="40" fill="currentColor">
-                <path
-                    d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-            </svg>
-        </div>
-        <h1>{{ contacto?.FirstName }} {{ contacto?.LastName }}</h1>
-        <p class="id-actual">ID actual: {{ id() }}</p>
-
-        <div class="detalle-row">
-            <span class="etiqueta">Teléfono</span>
-            <span class="valor">{{ contacto?.Number }}</span>
-        </div>
-        <div class="detalle-row">
-            <span class="etiqueta">Dirección</span>
-            <span class="valor">{{ contacto?.Adress }}</span>
-        </div>
-        <div>
-            <button class="btn-eliminar-detalle" (click)="eliminarContacto(id())">Eliminar contacto</button>
-        </div>
+<header>
+  <div>
+    <a class="button" routerLink="/contacts">⬅</a>
+    <h1>{{contacto()?.firstName}} {{contacto()?.lastName}}</h1>
+  </div>
+  <button>Cerrar sesión</button>
+</header>
+<main class="card">
+  <div>
+    <p>Telefono</p>
+    <p>{{contacto()?.number}}</p>
+  </div>
+  <div>
+    <p>Email</p>
+    <p>{{contacto()?.email}}</p>
+  </div>
+  <div>
+    <p>Dirección</p>
+    <p>{{contacto()?.address}}</p>
+  </div>
+  @if(contacto()){
+    <div>
+      <a class="button" [routerLink]="['/contacts',contacto()?.id,'edit']">Editar</a>
+      <button (click)="eliminarContacto(contacto()!.id)">Eliminar</button>
     </div>
-</div>
+  }
+</main>

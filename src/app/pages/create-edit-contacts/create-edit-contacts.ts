@@ -1,63 +1,59 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { Contact } from '../../interfaces/contacts';
+import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
+import { Contact } from '../../interfaces/contact';
 import { form, FormField } from '@angular/forms/signals';
-import { ContactsService } from '../../services/contacts';
+import { ContactsService } from '../../services/contactsService';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Auth } from '../../services/auth';
 
 @Component({
   imports: [FormField],
-  selector: 'app-create-edit-contacts',
-  styleUrl: './create-edit-contacts.scss',
-  templateUrl: './create-edit-contacts.html',
+  selector: 'app-create-edit-contact',
+  styleUrl: './create-edit-contact.scss',
+  templateUrl: './create-edit-contact.html',
 })
-export class CreateEditContacts implements OnInit {
-  ngOnInit(): void{
-    if (this.id()){
-      const contacto = this.contactsService.getContactsById(this.id()!);
+export class CreateEditContact implements OnInit{
+  async ngOnInit(): Promise<void> {
+    if(this.id()){
+      const contacto = await this.contactsService.getContactById(this.id()!);
+      if(contacto) {
+        this.newContactModel.set(contacto)
+      }
     }
   }
 
   authService = inject(Auth);
   contactsService = inject(ContactsService);
-  router = inject(Router);
+  router = inject(Router)
 
-  
   newContactModel = signal<Contact>({
-    Id: 0,
-    FirstName: "",
-    LastName: "",
-    Number: "",
-    Description: '',
-    UserId: 0,
-    IsFavorite: false
+    id: 0,
+    firstName: '',
+    lastName: '',
+    number: '',
+    isFavorite: false,
+    groupIds: []
   });
-  
-  id = input<string>();
-  
-  formCreateContact = form(this.newContactModel);
 
-  ngOnInit(): void {
-    if (this.id()) {
-      const contacto = this.contactsService.getContactById(this.id()!);
-      if (contacto) {
-        this.newContactModel.set(contacto);
-      }
-    }
-  }
+  id = input<number>();
+
+  // mostrarForm = effect(() => console.log(this.newContactModel()))
+
+  formCreateContact = form(this.newContactModel);
 
   onSubmit(event: Event) {
     event.preventDefault();
 
-    if (this.id()) {
-      this.editarContacto();
+    //Editar
+    if(this.id()){
+      this.editarContacto()
     } else {
-      this.crearContacto();
+      this.crearContacto()
     }
+    
   }
 
-  crearContacto() {
+  crearContacto(){
     const idContactoCreado = this.contactsService.agregarContacto(this.newContactModel());
 
     Swal.mixin({
@@ -76,11 +72,11 @@ export class CreateEditContacts implements OnInit {
       title: "Contacto creado"
     });
 
-    this.router.navigate(['/contacts', idContactoCreado]);
+    this.router.navigate(['/contacts',idContactoCreado])
   }
 
-  editarContacto() {
-    this.contactsService.editContact(this.newContactModel());
+  editarContacto(){
+    this.contactsService.editContact(this.newContactModel())
 
     Swal.mixin({
       toast: true,
@@ -98,6 +94,7 @@ export class CreateEditContacts implements OnInit {
       title: "Contacto editado"
     });
 
-    this.router.navigate(['/contacts', this.newContactModel().Id]);
+    this.router.navigate(['/contacts',this.newContactModel().id])
   }
+
 }
