@@ -1,13 +1,13 @@
 <header>
     <h1>Mis contactos</h1>
-    <button>Cerrar sesión</button>
+    <button (click)="authService.logout()">Cerrar sesión</button>
 </header>
 
 <main>
     <div class="contactos-lista">
-        @for (contacto of contacts.contactList; track contacto.Id) {
+        @for (contacto of contactsService.contactList(); track contacto.id) {
         <div class="contacto card">
-            <a class="contacto-item" [routerLink]="['/contacts', contacto.Id]">
+            <a class="contacto-item" [routerLink]="['/contacts', contacto.id]">
                 <span class="avatar">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                         <path
@@ -15,12 +15,12 @@
                     </svg>
                 </span>
                 <span class="info">
-                    <span class="nombre">{{ contacto.FirstName }} {{ contacto.LastName }}</span>
-                    <span class="telefono">{{ contacto.Number }}</span>
+                    <span class="nombre">{{ contacto.firstName }} {{ contacto.lastName }}</span>
+                    <span class="telefono">{{ contacto.number }}</span>
                 </span>
             </a>
-            <a class="btn-editar" [routerLink]="['/contacts', contacto.Id, 'edit']">Editar</a>
-            <button class="btn-eliminar" (click)="eliminarContacto(contacto.Id)">Eliminar</button>
+            <a class="btn-editar" [routerLink]="['/contacts', contacto.id, 'edit']">Editar</a>
+            <button class="btn-eliminar" (click)="eliminarContacto(contacto.id)">Eliminar</button>
         </div>
         }
     </div>

@@ -17,9 +17,8 @@ export class Login{
 
 
   loginModel = signal<LoginForm>({
-  email : " ",
-  password: " "
-
+    email: "",
+    password: ""
   });
 
   formLogin = form(this.loginModel, (schemaPath) => {

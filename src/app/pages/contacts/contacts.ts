@@ -1,44 +1,42 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { ContactsService } from '../../services/contactsService';
-import { Contact } from '../../interfaces/contact';
-import { Router, RouterLink } from '@angular/router';
+import { Component, inject, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { ContactsService } from '../../services/contacts';
+import { Auth } from '../../services/auth';
 import Swal from 'sweetalert2';
 
 @Component({
   imports: [RouterLink],
-  selector: 'app-contact-details',
-  styleUrl: './contact-details.scss',
-  templateUrl: './contact-details.html',
+  selector: 'app-contacts',
+  styleUrl: './contacts.scss',
+  templateUrl: './contacts.html',
 })
-export class ContactDetails implements OnInit {
+export class Contacts implements OnInit {
 
-  id = input.required<number>();
-  contacto = signal<Contact | undefined>(undefined);
   contactsService = inject(ContactsService);
-  router = inject(Router)
+  authService = inject(Auth);
 
-  async ngOnInit() {
-    this.contacto.set(await this.contactsService.getContactById(this.id()))
+  ngOnInit(): void {
+    this.contactsService.getContacts();
   }
 
-  eliminarContacto(id:number){
-      this.contactsService.deleteContact(id);
-      Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 2000,
-        theme: 'dark',
-        timerProgressBar: false,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-      }).fire({
-        icon: "success",
-        title: "Contacto eliminado"
-      });
-      this.router.navigate(["/contacts"])
-    }
+  async eliminarContacto(id: number) {
+    const eliminado = await this.contactsService.deleteContact(id);
+    if (!eliminado) return;
 
+    Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 2000,
+      theme: 'dark',
+      timerProgressBar: false,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    }).fire({
+      icon: "success",
+      title: "Contacto eliminado"
+    });
+  }
 }

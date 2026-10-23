@@ -1,9 +1,8 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { ContactsService } from '../../services/contacts';
 import { Contact } from '../../interfaces/contacts';
 import { Router, RouterLink } from '@angular/router';
 import Swal from 'sweetalert2';
-
 
 @Component({
   imports: [RouterLink],
@@ -14,16 +13,19 @@ import Swal from 'sweetalert2';
 export class ContactDetails implements OnInit {
 
   id = input.required<number>();
-  contacto: Contact | undefined;
+  contacto = signal<Contact | undefined>(undefined);
   contactsService = inject(ContactsService);
-  router = inject(Router)
+  router = inject(Router);
 
-  ngOnInit(): void {
-    // this.contacto = this.contactsService.getContactById(this.id())
+  async ngOnInit() {
+    const contacto = await this.contactsService.getContactById(this.id());
+    this.contacto.set(contacto ?? undefined);
   }
 
-  eliminarContacto(id: number) {
-    this.contactsService.deleteContact(id);
+  async eliminarContacto(id: number) {
+    const eliminado = await this.contactsService.deleteContact(id);
+    if (!eliminado) return;
+
     Swal.mixin({
       toast: true,
       position: "top-end",
@@ -39,6 +41,6 @@ export class ContactDetails implements OnInit {
       icon: "success",
       title: "Contacto eliminado"
     });
-    this.router.navigate(["/contacts"])
+    this.router.navigate(["/contacts"]);
   }
 }

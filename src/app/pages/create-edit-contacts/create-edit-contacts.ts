@@ -53,8 +53,9 @@ export class CreateEditContact implements OnInit{
     
   }
 
-  crearContacto(){
-    const idContactoCreado = this.contactsService.agregarContacto(this.newContactModel());
+   async crearContacto() {
+    const creado = await this.contactsService.agregarContacto(this.newContactModel());
+    if (!creado) return;
 
     Swal.mixin({
       toast: true,
@@ -72,11 +73,12 @@ export class CreateEditContact implements OnInit{
       title: "Contacto creado"
     });
 
-    this.router.navigate(['/contacts',idContactoCreado])
+    this.router.navigate(['/contacts']);
   }
 
-  editarContacto(){
-    this.contactsService.editContact(this.newContactModel())
+  async editarContacto() {
+    const editado = await this.contactsService.editContact(this.newContactModel());
+    if (!editado) return;
 
     Swal.mixin({
       toast: true,
@@ -94,7 +96,5 @@ export class CreateEditContact implements OnInit{
       title: "Contacto editado"
     });
 
-    this.router.navigate(['/contacts',this.newContactModel().id])
-  }
-
-}
+    this.router.navigate(['/contacts', this.newContactModel().id]);
+  }}

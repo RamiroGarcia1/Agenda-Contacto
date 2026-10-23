@@ -1,25 +1,29 @@
-<section>
-   <div class="card chico">  
-       <h1>Agenda Contactos</h1>
-       <h3>Registrarse</h3>
-       <form (submit)="register($event)">
-           <div>
-            <label for="">Primer Nombre</label>
-               <input type="text" id="" [formField]="formRegister.firstName">
-               <label for="">Apellido</label>
-               <input type="text" id="" [formField]="formRegister.lastName">
-               <label for="">Email</label>
-               <input type="email" id="" [formField]="formRegister.email">
-               <label for="">Password</label>
-               <input type="password" id="" [formField]="formRegister.password">
-            <label for="">Repetir password</label>
-            <input type="password" id="" [formField]="formRegister.password2">
-            @if(formRegister.password2().invalid()){
-                <p>Las contraseñas no coinciden</p>
+<div class="login-contenedor">
+    <div class="login-tarjeta">
+        <h1>Agenda Contactos</h1>
+
+        <form (submit)="register($event)">
+            <label for="nombre">Primer nombre</label>
+            <input type="text" id="nombre" [formField]="formRegister.firstName">
+
+            <label for="apellido">Apellido</label>
+            <input type="text" id="apellido" [formField]="formRegister.lastName">
+
+            <label for="email">Email</label>
+            <input type="email" id="email" [formField]="formRegister.email">
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" [formField]="formRegister.password">
+
+            <label for="password2">Repetir contraseña</label>
+            <input type="password" id="password2" [formField]="formRegister.password2">
+            @if (formRegister.password2().invalid()) {
+                <span class="error">Las contraseñas no coinciden</span>
             }
-            </div>
-            <button [disabled]="formRegister().invalid()">Registrese</button>
-        <p>Tenés cuenta? <a routerLink="/login">Inicia sesión</a></p>
+
+            <button [disabled]="formRegister().invalid()">Registrarse</button>
         </form>
+
+        <p>¿Ya tenes cuenta? <a routerLink="/login">Iniciá sesión</a></p>
     </div>
-</section>
+</div>

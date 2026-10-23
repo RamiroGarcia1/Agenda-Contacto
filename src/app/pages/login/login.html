@@ -2,16 +2,16 @@
     <div class="login-tarjeta">
         <h1>Agenda Contactos</h1>
 
-        <form>
+        <form (submit)="login($event)">
             <label for="email">Email</label>
-            <input type="text" id="email">
+            <input type="email" id="email" [formField]="formLogin.email">
 
             <label for="contraseña">Contraseña</label>
-            <input type="password" id="contraseña">
+            <input type="password" id="contraseña" [formField]="formLogin.password">
 
-            <button>Iniciar Sesion</button>
+            <button [disabled]="formLogin().invalid()">Iniciar Sesión</button>
         </form>
 
-        <p>Tenes cuenta? <a routerLink="/register">Registrese</a></p>
+        <p>¿No tenés cuenta? <a routerLink="/register">Registrate</a></p>
     </div>
 </div>
