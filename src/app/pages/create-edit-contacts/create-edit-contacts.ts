@@ -1,7 +1,7 @@
 import { Component, effect, inject, input, OnInit, signal } from '@angular/core';
-import { Contact } from '../../interfaces/contact';
+import { Contact } from '../../interfaces/contacts';
 import { form, FormField } from '@angular/forms/signals';
-import { ContactsService } from '../../services/contactsService';
+import { ContactsService } from '../../services/contacts';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 import { Auth } from '../../services/auth';
@@ -9,8 +9,8 @@ import { Auth } from '../../services/auth';
 @Component({
   imports: [FormField],
   selector: 'app-create-edit-contact',
-  styleUrl: './create-edit-contact.scss',
-  templateUrl: './create-edit-contact.html',
+  styleUrl: './create-edit-contacts.scss',
+  templateUrl: './create-edit-contacts.html',
 })
 export class CreateEditContact implements OnInit{
   async ngOnInit(): Promise<void> {

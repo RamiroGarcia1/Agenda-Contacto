@@ -1,40 +1,42 @@
-import { inject, Injectable, Service, signal } from '@angular/core';
+import { inject, Service, signal } from '@angular/core';
 import { Contact } from '../interfaces/contacts';
 import { Auth } from './auth';
-import { Contacts } from '../pages/contacts/contacts';
 
 @Service()
-
-
 export class ContactsService {
 
-  authService = inject(Auth); 
+authService = inject(Auth);
 
-  readonly contactList = signal<Contact[]>([]);
+readonly contactList = signal<Contact[]>([]);
 
-  agregarContacto(nuevoContacto: Contact) {
-    // const nuevoId = (this.contactList.length + 1);
-    // this.contactList.push({
-    //   Id: nuevoId,
-    //   FirstName: nuevoContacto.FirstName,
-    //   LastName: nuevoContacto.LastName,
-    //   Number: nuevoContacto.Number,
-    //   Description: '',
-    //   UserId: 0,
-    //   IsFavorite: false
-    // })
-    // return nuevoId;
-  }
 
-  async getContacts():Promise<Contact[]>{
-    const res = await fetch( ,{
-      method : "Get",
-      headers: {
-        Authorization : "Bearer" + this.authService.token
-      }
+  async agregarContacto(nuevoContacto:Contact){
+
+const res = await fetch("http://localhost:5000/api/contacts",{
+    method: "POST",
+    headers: {
+        "content-type" : "application/json",
+        "authorization": "Bearer "+this.authService.token
     },
+    body : JSON.stringify(nuevoContacto)
   })
+  if(!res.ok) return false;
 
+  const nuevoContactoBack = await res.json();
+  this.contactList.update(value => [...value,nuevoContactoBack])
+  return res.ok
+
+
+}
+
+async getContacts():Promise<Contact[]>{
+  const res = await fetch("http://localhost:5000/api/contacts",{
+    method: "GET",
+    headers: {
+        Authorization: "Bearer "+this.authService.token
+    },
+    
+  })
   if (!res.ok) return [];
   const contactos = await res.json()
   this.contactList.set(contactos);
@@ -43,25 +45,53 @@ export class ContactsService {
   return contactos;
 }
 
+// Busca un contacto desde un ID
+  async getContactById(id:number){
+  const res = await fetch("http://localhost:5000/api/contacts/"+id,{
+    method: "GET",
+    headers: {
+        Authorization: "Bearer "+this.authService.token
+    },
+  })
+  if (!res.ok) return null;
+  const contacto = await res.json()
+  return contacto;
+}
 
+  async deleteContact(id:number){
+  const res = await fetch("http://localhost:5000/api/contacts/"+id,{
+    method: "DELETE",
+    headers: {
+        "content-type" : "application/json",
+        "authorization": "Bearer "+this.authService.token
+    },
+  })
+  if(!res.ok) return false;
+  this.contactList.update(value => value.filter(c => c.id !== id))
+  return true;
+}
 
+  async editContact(contact:Contact){
+  const res = await fetch("http://localhost:5000/api/contacts/"+contact.id,{
+    method: "PUT",
+    headers: {
+        "content-type" : "application/json",
+        "authorization": "Bearer "+this.authService.token
+    },
+    body : JSON.stringify(contact)
+  })
+  if(!res.ok) return false;
 
-
-
-  getContactById(id: string) {
-
-
-    // const contactoEncontrado = this.contactList.find(contact => contact.Id === id);
-    // return contactoEncontrado;
-  }
-
-  deleteContact(id: string) {
-    this.contactList = this.contactList.filter(c => c.Id !== id);
-  }
-
-  editContact(contact: Contact) {
-    this.contactList = this.contactList.map(c => {
-      if (c.Id === contact.Id) return contact;
+  const nuevoContactoBack = await res.json();
+  this.contactList.update(value => {
+    return value.map(c => {
+      if(c.id === nuevoContactoBack.id) return contact;
       return c
     });
-  }
+  })
+  return res.ok
+
+}
+
+
+}
