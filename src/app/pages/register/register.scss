@@ -1,5 +1,120 @@
-.error {
-    color: #c0392b;
-    font-size: 0.8rem;
-    margin-top: 6px;
+.login-contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f4f7f6;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.login-tarjeta {
+  background-color: #ffffff;
+  padding: 40px 32px;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 420px;
+
+  h1 {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 1.75rem;
+    margin-top: 0;
+    margin-bottom: 24px;
+    font-weight: 700;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+
+    label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 6px;
+      margin-top: 16px; /* Espacio separador con el input anterior */
+
+      &:first-of-type {
+        margin-top: 0; /* Al primer label le sacamos el margen superior */
+      }
+    }
+
+    input {
+      padding: 12px 14px;
+      font-size: 1rem;
+      color: #333;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      background-color: #f9fafb;
+      transition: all 0.3s ease;
+      outline: none;
+      
+      &:focus {
+        border-color: #3b82f6; /* Color azul al hacer foco */
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+      }
+    }
+
+    /* Tu clase de error mantenida y mejorada */
+    .error {
+      color: #c0392b;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-top: 6px;
+      margin-bottom: -10px; /* Compensa el espacio para que no empuje tanto el botón */
+    }
+
+    button {
+      margin-top: 32px;
+      padding: 14px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      background-color: #3b82f6;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.1s ease;
+
+      /* Estado cuando el botón está habilitado y pasas el mouse */
+      &:hover:not(:disabled) {
+        background-color: #2563eb;
+      }
+
+      /* Efecto click */
+      &:active:not(:disabled) {
+        transform: scale(0.98);
+      }
+
+      /* Estado apagado por [disabled]="formRegister().invalid()" */
+      &:disabled {
+        background-color: #93c5fd;
+        cursor: not-allowed;
+        opacity: 0.7;
+      }
+    }
+  }
+
+  p {
+    text-align: center;
+    margin-top: 24px;
+    margin-bottom: 0;
+    font-size: 0.9rem;
+    color: #64748b;
+
+    a {
+      color: #3b82f6;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #1d4ed8;
+        text-decoration: underline;
+      }
+    }
+  }
 }
